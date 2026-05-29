@@ -1,0 +1,153 @@
+{
+  "name": "hermes-ai-led-dev-skills",
+  "version": "1.0.0",
+  "description": "AI-led 软件开发全流程 Hermes Agent Skills 集合，覆盖从需求、设计、实现到测试、发布的完整 DevOps 链路。",
+  "author": "liushengli",
+  "license": "MIT",
+  "repository": "https://github.com/liushengli/hermes-ai-led-dev-skills",
+  "skills": [
+    {
+      "name": "ai-led-dev-architecture",
+      "path": "skills/ai-led-dev-architecture",
+      "description": "AI驱动的系统架构设计，包含技术选型、模块划分与接口定义。",
+      "category": "design",
+      "tags": [
+        "ai-led",
+        "dev",
+        "design"
+      ]
+    },
+    {
+      "name": "ai-led-dev-change-mgmt",
+      "path": "skills/ai-led-dev-change-mgmt",
+      "description": "AI驱动的变更管理流程，控制需求变更、影响分析与回滚策略。",
+      "category": "process",
+      "tags": [
+        "ai-led",
+        "dev",
+        "process"
+      ]
+    },
+    {
+      "name": "ai-led-dev-documentation",
+      "path": "skills/ai-led-dev-documentation",
+      "description": "AI驱动的技术文档自动生成与维护，保持代码与文档同步。",
+      "category": "docs",
+      "tags": [
+        "ai-led",
+        "dev",
+        "docs"
+      ]
+    },
+    {
+      "name": "ai-led-dev-domain-spec",
+      "path": "skills/ai-led-dev-domain-spec",
+      "description": "AI驱动的领域模型与业务规范定义，统一团队业务语言。",
+      "category": "design",
+      "tags": [
+        "ai-led",
+        "dev",
+        "design"
+      ]
+    },
+    {
+      "name": "ai-led-dev-feature-design",
+      "path": "skills/ai-led-dev-feature-design",
+      "description": "AI驱动的功能设计流程，输出PRD、流程图与状态机。",
+      "category": "design",
+      "tags": [
+        "ai-led",
+        "dev",
+        "design"
+      ]
+    },
+    {
+      "name": "ai-led-dev-implementation",
+      "path": "skills/ai-led-dev-implementation",
+      "description": "AI驱动的代码实现指导，含编码规范、重构建议与最佳实践。",
+      "category": "development",
+      "tags": [
+        "ai-led",
+        "dev",
+        "development"
+      ]
+    },
+    {
+      "name": "ai-led-dev-overview",
+      "path": "skills/ai-led-dev-overview",
+      "description": "AI驱动开发方法论总览，定义全流程框架与角色职责。",
+      "category": "process",
+      "tags": [
+        "ai-led",
+        "dev",
+        "process"
+      ]
+    },
+    {
+      "name": "ai-led-dev-project-init",
+      "path": "skills/ai-led-dev-project-init",
+      "description": "AI驱动的项目初始化，含仓库搭建、目录结构与技术栈配置。",
+      "category": "development",
+      "tags": [
+        "ai-led",
+        "dev",
+        "development"
+      ]
+    },
+    {
+      "name": "ai-led-dev-quality-audit",
+      "path": "skills/ai-led-dev-quality-audit",
+      "description": "AI驱动的质量审计，覆盖代码质量、安全扫描与性能基线。",
+      "category": "quality",
+      "tags": [
+        "ai-led",
+        "dev",
+        "quality"
+      ]
+    },
+    {
+      "name": "ai-led-dev-requirements",
+      "path": "skills/ai-led-dev-requirements",
+      "description": "AI驱动的需求分析，用户故事拆分、验收标准与优先级排序。",
+      "category": "analysis",
+      "tags": [
+        "ai-led",
+        "dev",
+        "analysis"
+      ]
+    },
+    {
+      "name": "ai-led-dev-testing",
+      "path": "skills/ai-led-dev-testing",
+      "description": "AI驱动的测试策略，单元测试、集成测试与自动化测试生成。",
+      "category": "quality",
+      "tags": [
+        "ai-led",
+        "dev",
+        "quality"
+      ]
+    },
+    {
+      "name": "ai-led-dev-user-preference",
+      "path": "skills/ai-led-dev-user-preference",
+      "description": "AI驱动的用户偏好管理，个性化配置与上下文记忆维护。",
+      "category": "config",
+      "tags": [
+        "ai-led",
+        "dev",
+        "config"
+      ]
+    },
+    {
+      "name": "ai-led-dev-version-control",
+      "path": "skills/ai-led-dev-version-control",
+      "description": "AI驱动的版本控制规范，分支策略、提交规范与发布流程。",
+      "category": "development",
+      "tags": [
+        "ai-led",
+        "dev",
+        "development"
+      ]
+    }
+  ]
+}

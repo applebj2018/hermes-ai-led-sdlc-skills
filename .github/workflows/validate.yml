@@ -1,0 +1,29 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate SKILL.md files
+        run: node scripts/validate.mjs
+
+      - name: Validate catalog.json
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('catalog.json', 'utf8')); console.log('catalog.json OK')"
+
+      - name: Validate index.json
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('.well-known/skills/index.json', 'utf8')); console.log('index.json OK')"

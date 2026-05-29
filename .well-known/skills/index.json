@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "repository": {
+    "name": "hermes-ai-led-dev-skills",
+    "url": "https://github.com/liushengli/hermes-ai-led-dev-skills"
+  },
+  "skills": [
+    {
+      "name": "ai-led-dev-architecture",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-architecture/SKILL.md",
+      "description": "AI驱动的系统架构设计，包含技术选型、模块划分与接口定义。"
+    },
+    {
+      "name": "ai-led-dev-change-mgmt",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-change-mgmt/SKILL.md",
+      "description": "AI驱动的变更管理流程，控制需求变更、影响分析与回滚策略。"
+    },
+    {
+      "name": "ai-led-dev-documentation",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-documentation/SKILL.md",
+      "description": "AI驱动的技术文档自动生成与维护，保持代码与文档同步。"
+    },
+    {
+      "name": "ai-led-dev-domain-spec",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-domain-spec/SKILL.md",
+      "description": "AI驱动的领域模型与业务规范定义，统一团队业务语言。"
+    },
+    {
+      "name": "ai-led-dev-feature-design",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-feature-design/SKILL.md",
+      "description": "AI驱动的功能设计流程，输出PRD、流程图与状态机。"
+    },
+    {
+      "name": "ai-led-dev-implementation",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-implementation/SKILL.md",
+      "description": "AI驱动的代码实现指导，含编码规范、重构建议与最佳实践。"
+    },
+    {
+      "name": "ai-led-dev-overview",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-overview/SKILL.md",
+      "description": "AI驱动开发方法论总览，定义全流程框架与角色职责。"
+    },
+    {
+      "name": "ai-led-dev-project-init",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-project-init/SKILL.md",
+      "description": "AI驱动的项目初始化，含仓库搭建、目录结构与技术栈配置。"
+    },
+    {
+      "name": "ai-led-dev-quality-audit",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-quality-audit/SKILL.md",
+      "description": "AI驱动的质量审计，覆盖代码质量、安全扫描与性能基线。"
+    },
+    {
+      "name": "ai-led-dev-requirements",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-requirements/SKILL.md",
+      "description": "AI驱动的需求分析，用户故事拆分、验收标准与优先级排序。"
+    },
+    {
+      "name": "ai-led-dev-testing",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-testing/SKILL.md",
+      "description": "AI驱动的测试策略，单元测试、集成测试与自动化测试生成。"
+    },
+    {
+      "name": "ai-led-dev-user-preference",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-user-preference/SKILL.md",
+      "description": "AI驱动的用户偏好管理，个性化配置与上下文记忆维护。"
+    },
+    {
+      "name": "ai-led-dev-version-control",
+      "install_url": "https://raw.githubusercontent.com/liushengli/hermes-ai-led-dev-skills/main/skills/ai-led-dev-version-control/SKILL.md",
+      "description": "AI驱动的版本控制规范，分支策略、提交规范与发布流程。"
+    }
+  ]
+}
