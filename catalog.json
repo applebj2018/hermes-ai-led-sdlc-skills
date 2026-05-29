@@ -2,9 +2,9 @@
   "name": "hermes-ai-led-dev-skills",
   "version": "1.0.0",
   "description": "AI-led 软件开发全流程 Hermes Agent Skills 集合，覆盖从需求、设计、实现到测试、发布的完整 DevOps 链路。",
-  "author": "liushengli",
+  "author": "applebj2018",
   "license": "MIT",
-  "repository": "https://github.com/liushengli/hermes-ai-led-dev-skills",
+  "repository": "https://github.com/applebj2018/hermes-ai-led-dev-skills",
   "skills": [
     {
       "name": "ai-led-dev-architecture",

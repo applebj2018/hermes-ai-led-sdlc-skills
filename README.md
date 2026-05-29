@@ -27,13 +27,13 @@ AI-led 软件开发全流程 Hermes Agent Skills 集合。
 ### 方式一：Hermes CLI 直接安装（推荐）
 
 ```bash
-hermes skills install https://github.com/liushengli/hermes-ai-led-dev-skills
+hermes skills install https://github.com/applebj2018/hermes-ai-led-dev-skills
 ```
 
 ### 方式二：手动克隆到本地
 
 ```bash
-git clone https://github.com/liushengli/hermes-ai-led-dev-skills.git
+git clone https://github.com/applebj2018/hermes-ai-led-dev-skills.git
 cp -r hermes-ai-led-dev-skills/skills/* ~/.hermes/skills/
 ```
 
