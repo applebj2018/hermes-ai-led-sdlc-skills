@@ -136,6 +136,72 @@ Phase 9:   团队协作
 5. **小步迭代** — 每个AI任务应在2-5分钟内可完成；大任务必须拆解
 6. **验证优先于生成** — 测试和验证是质量瓶颈，在这里投入
 7. **代码是事实，文档是描述** — 不一致时同步修改两者；代码是事实来源
+8. **人类审批是强制的** — 每个阶段完成后必须经人类审批才能进入下一阶段
+
+## 阶段审批检查点机制
+
+每个阶段结束时，AI必须生成审批清单并等待人类确认。审批状态持久化到 `checkpoint.json`。
+
+### 审批流程
+
+```
+阶段完成 → AI提交审批清单 → 人类审查 → 批准/拒绝 → (拒绝则修改后重新提交) → 进入下一阶段
+```
+
+### 审批清单模板
+
+每个阶段提交时，AI应输出以下格式：
+
+```
+## 📋 阶段审批: Phase X — [阶段名称]
+
+### 产出清单
+- [文件1] — [说明]
+- [文件2] — [说明]
+
+### 审计结果
+- [审计项1]: ✅/❌
+- [审计项2]: ✅/❌
+
+### 通过标准
+- [ ] 所有审计项通过
+- [ ] 测试全部通过
+- [ ] 文档完整
+
+请回复 "批准" 或 "拒绝 + 原因"。
+```
+
+### 审批状态
+
+| 状态 | 含义 | 后续动作 |
+|------|------|---------|
+| `⏳ pending` | 待审批 | 等待人类确认 |
+| `✅ approved` | 已批准 | 可进入下一阶段 |
+| `❌ rejected` | 已拒绝 | 修改后重新提交 |
+| `⏭️ skipped` | 已跳过 | 仅用于开发调试 |
+
+### 审批检查点文件 (`checkpoint.json`)
+
+项目根目录维护 `checkpoint.json`，记录各阶段审批状态：
+
+```json
+{
+  "project_name": "项目名称",
+  "checkpoints": [
+    {
+      "phase": "Phase 0",
+      "description": "项目初始化",
+      "status": "approved",
+      "artifacts": ["SOUL.md", "AGENTS.md"],
+      "approved_by": "user",
+      "approved_at": "2026-05-29T11:30:00"
+    }
+  ]
+}
+```
+
+**实施参考**: 见 `ai-led-dev-version-control` 技能中的"人类审批清单"章节。
+在实际项目中可使用 `approval.py` 脚本管理审批状态（CLI 工具）。
 
 ## 何时激活
 
@@ -147,6 +213,8 @@ Phase 9:   团队协作
 - 项目初始化、Agent配置
 
 ## 相关技能
+
+**设计原则与经验**：详见 `references/design-lessons.md` — 技能正交性、避免重复、激活机制。
 
 || 技能 | 阶段 | 激活关键词 ||------|------|-----------|| `ai-led-dev-project-init` | Phase 0 | 项目初始化、Agent配置、SOUL.md、AGENTS.md || `ai-led-dev-requirements` | Phase 1 | 需求工程、PRD、INITIAL.md、需求分析 || `ai-led-dev-architecture` | Phase 2 | 架构设计、技术选型、系统设计 || `ai-led-dev-feature-design` | Phase 2.5 | 功能设计、UI设计、权限设计、原型 || `ai-led-dev-implementation` | Phase 3-4 | 编码实施、TDD、代码生成 || `ai-led-dev-testing` | Phase 5 | 测试工程、测试用例、TDAD、验证优先 || `ai-led-dev-documentation` | Phase 6 | 文档同步、交付文档、用户手册 || `ai-led-dev-change-mgmt` | Phase 7 | 变更管理、迭代、影响分析 || `ai-led-dev-version-control` | Phase 8 | 版本管理、发布、补丁 || `ai-led-dev-quality-audit` | 跨阶段 | 质量审计、审查、审计报告 || `ai-led-dev-user-preference` | 跨阶段 | 用户偏好、技术选型、默认配置、ChromaDB、SQLite3、Ollama || `ai-led-dev-domain-spec` | 跨阶段 | 行业规范、领域知识、业务规则、电力行业 |
 
@@ -212,3 +280,28 @@ Phase 5: 测试工程
   ├── 加载 ai-led-dev-domain-spec → 行业特定测试场景
   └── 输出: 测试套件, 测试报告
 ```
+
+## 技能打包与分发
+
+当用户需要将这套方法论打包为 GitHub 仓库时：
+
+1. **仓库结构**：`skills/ai-led-dev-*/SKILL.md` + `README.md` + `LICENSE`
+2. **README 内容**：方法论概述、阶段流转图、技能清单、配置注入机制、硬性规则
+3. **分发命令**：
+   ```bash
+   # 复制技能到 Hermes
+   cp -r skills/ai-led-dev-* ~/.hermes/profiles/<profile>/skills/software-development/
+   ```
+4. **GitHub 推送**：`git remote add origin https://github.com/<user>/<repo>.git && git push -u origin main`
+
+**详细说明**：见 `references/skill-design-principles.md`
+
+## 技能设计原则（元规则）
+
+本方法论的技能体系遵循以下设计原则，所有新增技能也应遵守：
+
+1. **正交性**：通用方法论（怎么做）与配置注入（用什么做/行业要求什么）分离
+2. **推荐 vs 偏好**：架构技能提供业界通用推荐，用户偏好技能提供默认值，两者互补不重叠
+3. **跨阶段引用**：配置注入技能通过 `related_skills` 与所有阶段技能关联
+4. **可覆盖**：所有默认值可在项目级别（AGENTS.md）覆盖
+5. **中文为主**：Prompt 模板和注释使用中文，保留核心英文术语
