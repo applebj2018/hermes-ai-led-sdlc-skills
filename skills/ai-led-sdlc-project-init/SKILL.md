@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-project-init
+name: ai-led-sdlc-project-init
 description: "Phase 0: 项目初始化与Agent配置。生成SOUL.md、AGENTS.md、CLAUDE.md通用模板，配置项目目录结构和协作规范。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [project-init, agent-setup, SOUL.md, AGENTS.md, CLAUDE.md, 项目初始化, Agent配置]
-    related_skills: [ai-led-dev-overview, ai-led-dev-requirements, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-requirements, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 0: 项目初始化与Agent配置
@@ -339,7 +339,7 @@ Phase 0 必须创建 `checkpoint.json`，这是方法论的核心机制——每
 
 **审批状态**: `pending` → `approved` / `rejected` / `skipped`
 **硬性规则**: 未获得当前阶段审批前，禁止进入下一阶段。
-**参考**: 详见 `ai-led-dev-overview` 技能的 `references/approval-checkpoint.md`。
+**参考**: 详见 `ai-led-sdlc-overview` 技能的 `references/approval-checkpoint.md`。
 
 ## 注意事项
 

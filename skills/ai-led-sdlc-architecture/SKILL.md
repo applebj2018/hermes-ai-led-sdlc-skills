@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-architecture
+name: ai-led-sdlc-architecture
 description: "Phase 2: 架构设计。基于INITIAL.md设计系统架构、数据模型、技术选型。强调简洁、成熟技术栈、可扩展性。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [architecture, 架构设计, tech-stack, 技术选型, DATA-MODEL, ARCHITECTURE, 系统设计]
-    related_skills: [ai-led-dev-overview, ai-led-dev-requirements, ai-led-dev-feature-design, ai-led-dev-quality-audit, ai-led-dev-user-preference, ai-led-dev-domain-spec]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-requirements, ai-led-sdlc-feature-design, ai-led-sdlc-quality-audit, ai-led-sdlc-user-preference, ai-led-sdlc-domain-spec]
 ---
 
 # Phase 2: 架构设计
@@ -18,6 +18,30 @@ metadata:
 - 需要设计数据模型
 
 ## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 2 入口 >
+- 前置检查：确认 INITIAL.md 已存在且状态为 approved
+- 禁止跳过：即使项目简单，架构文档可以简短但不可省略
+- 未批准的 INITIAL.md 不得进入 Phase 2
+</ HARD-GATE >
+
+< HARD-GATE: Phase 2 出口 >
+- 禁止跳过审计：ARCHITECTURE.md 和 DATA-MODEL.md 必须经 AI 审计
+- 禁止跳过人类审批：审计通过后必须等待用户明确批准
+- 禁止直接进入 Phase 2.5/4：架构未批准前，不得生成功能设计或代码
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"架构太复杂了，直接编码吧"** — 没有架构设计的编码是盲人摸象。模块边界不清、接口协议缺失、数据模型混乱，后期重构成本指数级增长。
+
+**"技术栈随便选"** — 不搜索业界最佳实践的技术选型是赌博。至少对比 2-3 个方案，考虑成熟度、兼容性、性能、安全性。
+
+**"过度设计"** — 为不确定的未来设计架构是浪费。架构服务于当前需求，保持简洁。
 
 ### 简洁优先
 
@@ -138,7 +162,7 @@ metadata:
 
 ## 技术栈推荐矩阵
 
-**注意**：本矩阵提供**业界通用推荐**，列出多种选项供选择。用户的**默认偏好**见 `ai-led-dev-user-preference` 技能。
+**注意**：本矩阵提供**业界通用推荐**，列出多种选项供选择。用户的**默认偏好**见 `ai-led-sdlc-user-preference` 技能。
 
 | 场景 | 推荐方案 | 备选方案 |
 |------|---------|---------|
@@ -155,10 +179,12 @@ metadata:
 | **API文档** | Swagger/OpenAPI | Redoc, Stoplight |
 
 **技术选型流程**：
-1. 加载 `ai-led-dev-user-preference` 获取用户默认偏好
-2. 加载 `ai-led-dev-domain-spec` 获取行业特定约束
+1. 加载 `ai-led-sdlc-user-preference` 获取用户默认偏好
+2. 加载 `ai-led-sdlc-domain-spec` 获取行业特定约束
 3. 根据需求从推荐矩阵中选择技术
 4. 如有覆盖，在 AGENTS.md 中明确声明
+
+**详细说明**：见 `references/tech-stack-decision-framework.md`
 
 ## 审计提示词模板
 
@@ -243,3 +269,5 @@ metadata:
 - **性能前置**：在架构阶段就考虑性能，不要等到编码后优化
 - **安全前置**：安全是架构属性，不是补丁
 - **提醒用户**：如果技术选型有重大影响，主动提醒用户确认
+- **避免重复**：技术栈推荐矩阵提供业界通用选项，用户的默认偏好见 `ai-led-sdlc-user-preference`，行业特定约束见 `ai-led-sdlc-domain-spec`。不要在架构技能中硬编码用户偏好，避免多处维护同一配置。
+- **避免重复**：技术栈推荐矩阵提供**通用选项**，用户默认偏好见 `ai-led-sdlc-user-preference`，行业约束见 `ai-led-sdlc-domain-spec`。不要在这些技能之间复制相同内容。

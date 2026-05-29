@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-implementation
+name: ai-led-sdlc-implementation
 description: "Phase 3-4: 编码实施。支持TDD和Test-last两种模式，小步迭代，代码与文档同步。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [implementation, 编码实施, TDD, test-last, 代码生成, 迭代开发, 测试数据]
-    related_skills: [ai-led-dev-overview, ai-led-dev-architecture, ai-led-dev-testing, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-architecture, ai-led-sdlc-testing, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 3-4: 编码实施
@@ -16,6 +16,36 @@ metadata:
 - 需要生成测试数据
 - 需要实现代码（支持TDD或Test-last模式）
 - 用户讨论编码、实现、代码生成
+
+## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 3-4 入口 >
+- 前置检查：确认 ARCHITECTURE.md 已存在且状态为 approved
+- 前置检查：确认 AGENTS.md 编码规范已存在
+- 未批准的设计文档不得进入编码阶段
+</ HARD-GATE >
+
+< HARD-GATE: Phase 3-4 出口 >
+- 禁止跳过测试：每个模块完成后必须运行测试并通过
+- 禁止跳过类型检查：每个模块必须通过 pyright 检查（0 错误）
+- 禁止跳过审计：代码必须经 AI 审计后才能提交人类审批
+- 禁止跳过文档同步：代码变更后必须更新对应的 .md 文档
+- 禁止直接进入 Phase 5：代码未审计和审批前，不得构建测试套件
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"先写代码，测试后面补"** — 这是 Test-last 模式的误用。Test-last 适用于需求不明确的探索阶段，不是偷懒的借口。核心业务逻辑必须 TDD。
+
+**"一次性生成整个模块"** — AI 生成的代码质量随长度指数级下降。每次只处理 1-2 个文件或一个明确模块，小步迭代。
+
+**"类型检查太严格了"** — pyright 报的错误不是噪音，是真实的问题。运行时暴露的成本是编码时修复的 10 倍。
+
+**"文档后面再写"** — 文档不是事后补充，是代码的锚点。AI 改代码前先读 .md 文件，两者必须同步更新。
 
 ## 两种开发模式
 
@@ -207,6 +237,8 @@ JSON格式，结构清晰，方便测试代码直接读取。
 
 ## 人类审批清单
 
+**审批机制**: 本阶段的审批是 `人类输入 → AI生成 → AI审计 → AI迭代 → 人类审批 → 下一阶段` 流水线的一环。审批状态持久化到 `checkpoint.json`。详见 `ai-led-sdlc-overview` → `references/approval-checkpoint.md`。
+
 | # | 审批项 | 通过标准 |
 |---|--------|---------|
 | 1 | 代码是否遵循编码规范 | 审计报告无❌项 |
@@ -223,10 +255,39 @@ JSON格式，结构清晰，方便测试代码直接读取。
 3. **选择模式**：根据场景选择TDD或Test-last模式
 4. **生成代码**：按小任务逐个生成代码
 5. **运行测试**：每完成一个小任务立即运行测试
-6. **代码审查**：提交给审计Agent审查
-7. **迭代修改**：根据审计报告修改代码
-8. **人类审批**：按审批清单逐项检查
-9. **版本提交**：将代码、文档、测试一起提交
+6. **类型检查**：每完成一个模块立即运行 pyright（见下方）
+7. **代码审查**：提交给审计Agent审查
+8. **迭代修改**：根据审计报告修改代码
+9. **人类审批**：按审批清单逐项检查
+10. **版本提交**：将代码、文档、测试一起提交
+
+## 类型检查（硬性要求）
+
+**每完成一个模块必须运行 pyright，0 错误才能进入下一步。**
+
+```bash
+# 类型检查
+python -m pyright --pythonversion 3.11 module1.py module2.py ...
+
+# 预期输出: 0 errors, 0 warnings, 0 informations
+```
+
+**常见类型错误及修复**：
+| 错误 | 原因 | 修复 |
+|------|------|------|
+| `reportAttributeAccessIssue` | 调用实例不存在的属性 | 检查类定义，使用模块级函数而非实例方法 |
+| `reportUndefinedVariable` | 导入缺失 | 检查 import 语句 |
+| `reportArgumentType` | 参数类型不匹配 | 添加类型转换或修改函数签名 |
+| `reportReturnType` | 返回值类型不一致 | 确保所有分支返回相同类型 |
+
+**工作流程**：
+1. 编写代码
+2. 运行 pyright → 有错误
+3. 修复错误
+4. 再次运行 pyright → 0 错误
+5. 继续下一步
+
+**不要跳过**：类型错误在运行时才会暴露，修复成本更高。
 
 ## 注意事项
 

@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-domain-spec
+name: ai-led-sdlc-domain-spec
 description: "行业规范与领域知识。存储行业特定的业务规则、数据规范、测试场景。在设计、测试、编码阶段自动注入。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [domain-spec, 行业规范, domain-knowledge, 领域知识, industry-standard, 行业标准]
-    related_skills: [ai-led-dev-overview, ai-led-dev-requirements, ai-led-dev-architecture, ai-led-dev-testing]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-requirements, ai-led-sdlc-architecture, ai-led-sdlc-testing]
 ---
 
 # 行业规范与领域知识
@@ -361,6 +361,8 @@ def test_transformer_oil_temp_check(oil_temp, expected_level):
 - 特定规范: IEC 61850, IEC 104
 - 数据不出内网: 是
 ```
+
+**详细说明**：见 `references/domain-knowledge-injection-pattern.md`
 
 ## 注意事项
 

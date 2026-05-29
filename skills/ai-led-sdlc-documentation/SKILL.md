@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-documentation
+name: ai-led-sdlc-documentation
 description: "Phase 6: 文档同步与交付。生成交付指南、用户手册、变更日志。强制代码与文档同步。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [documentation, 文档同步, 交付文档, 用户手册, CHANGELOG, DELIVERY-GUIDE]
-    related_skills: [ai-led-dev-overview, ai-led-dev-implementation, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-implementation, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 6: 文档同步与交付
@@ -18,6 +18,30 @@ metadata:
 - 用户讨论文档、交付、手册
 
 ## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 6 入口 >
+- 前置检查：确认代码已通过测试和审计
+- 前置检查：确认模块级同名 .md 文档已随代码同步更新
+- 未完成的测试不得进入文档交付阶段
+</ HARD-GATE >
+
+< HARD-GATE: Phase 6 出口 >
+- 禁止跳过文档审计：交付文档必须经 AI 审计完整性和准确性
+- 禁止跳过人类审批：交付文档必须经用户确认
+- 禁止文档不一致：代码与文档不一致时，必须同步修改
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"文档是最后的事，先交付再说"** — 文档是项目的记忆。没有文档的项目，维护者无法理解设计意图，每次修改都是盲猜。
+
+**"文档照抄代码"** — 文档不是代码的翻译。文档解释为什么（why），代码实现做什么（what）。两者互补，不重复。
+
+**"CHANGELOG 随便写"** — 变更日志是用户和运维的沟通桥梁。不准确的变更日志导致部署错误和回滚。
 
 ### 强制文档同步
 
@@ -240,3 +264,4 @@ metadata:
 - **可操作性**：用户手册的步骤必须可执行
 - **一致性检查**：定期抽查代码与文档的一致性
 - **版本对应**：文档版本号与代码版本号一致
+- **培训材料编写**：编写技术培训文档时，参考 `references/training-material-pattern.md`（例子先行、能力阶段、动手实践导向）

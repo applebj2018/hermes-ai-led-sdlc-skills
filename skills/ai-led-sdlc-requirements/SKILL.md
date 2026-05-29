@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-requirements
+name: ai-led-sdlc-requirements
 description: "Phase 1: 需求工程。强制采用brainstorming和外部搜索技术，生成INITIAL.md项目规格说明书。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [requirements, PRD, INITIAL.md, 需求工程, brainstorming, 需求分析, 规格说明书]
-    related_skills: [ai-led-dev-overview, ai-led-dev-project-init, ai-led-dev-architecture, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-project-init, ai-led-sdlc-architecture, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 1: 需求工程
@@ -18,6 +18,30 @@ metadata:
 - 用户讨论需求、功能、用户角色、业务规则
 
 ## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 1 入口 >
+- 禁止跳过：即使需求看似简单，也必须执行本阶段
+- 前置检查：确认 Phase 0 产出（AGENTS.md、SOUL.md）已存在且已批准
+- 未通过审批的 Phase 0 不得进入 Phase 1
+</ HARD-GATE >
+
+< HARD-GATE: Phase 1 出口 >
+- 禁止跳过审计：INITIAL.md 必须经 AI 审计后才能提交人类审批
+- 禁止跳过人类审批：审计通过后必须等待用户明确批准
+- 禁止直接进入 Phase 2：INITIAL.md 未批准前，不得生成 ARCHITECTURE.md
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"需求很简单，直接写架构吧"** — 这是最大的浪费源。没有 INITIAL.md 的架构设计是空中楼阁，技术选型和需求脱节，后期返工成本是前期的 10 倍。
+
+**"搜索太浪费时间"** — 不搜索业界最佳实践的需求分析是闭门造车。至少搜索 2 个来源，避免遗漏关键功能点。
+
+**"Brainstorming 走个过场"** — 不从多视角思考的需求文档必然遗漏边界条件和异常场景。
 
 ### 强制外部搜索
 
@@ -233,6 +257,19 @@ metadata:
 8. **版本化**：将最终版纳入版本管理
 9. **移交**：输出作为 Phase 2 的输入
 
+## 自我检查清单（生成 INITIAL.md 前必须完成）
+
+在生成 INITIAL.md 之前，**必须**确认以下检查项全部完成。未完成任何一项时，禁止进入生成阶段：
+
+- [ ] **外部搜索已完成**：至少搜索了 2 个业界类似系统的最佳实践，并记录了关键发现
+- [ ] **Brainstorming 已完成**：从用户角色、功能完整性、边界条件、异常场景、合规安全五个维度进行了结构化头脑风暴
+- [ ] **用户信息已确认**：项目定位、目标用户、核心功能、数据来源、约束条件、性能要求、集成需求、部署环境均已与用户确认
+- [ ] **MVP 已区分**：明确区分了 MVP 功能和后续迭代功能
+- [ ] **系统边界已定义**：In Scope 和 Out of Scope 清晰列出
+- [ ] **风险已识别**：至少识别了 3 个主要风险并有缓解措施
+
+**如果跳过搜索或 Brainstorming**：生成的 INITIAL.md 将缺乏业界视角和结构化思考，导致需求遗漏和架构偏差。这是硬性规则，不可协商。
+
 ## 注意事项
 
 - **不要跳过搜索**：即使需求看似简单，也要搜索最佳实践
@@ -241,3 +278,4 @@ metadata:
 - **量化指标**：成功标准必须是可量化的
 - **系统边界**：明确什么不做，防止范围蔓延
 - **风险前置**：早期识别风险，制定缓解措施
+- **引导式交互**：用户说"一步一步引导我完成"时，采用阶段性交付模式——每个 Phase 完成后暂停，等待用户确认再进入下一阶段。不要一次性生成所有阶段的内容。

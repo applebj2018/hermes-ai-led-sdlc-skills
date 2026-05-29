@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-change-mgmt
+name: ai-led-sdlc-change-mgmt
 description: "Phase 7: 变更管理与迭代。变更分类(L1/L2/L3)、影响分析、回环路径决策。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [change-management, 变更管理, iteration, 迭代, impact-analysis, 影响分析]
-    related_skills: [ai-led-dev-overview, ai-led-dev-implementation, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-implementation, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 7: 变更管理与迭代
@@ -18,6 +18,31 @@ metadata:
 - 用户讨论变更、迭代、需求修改
 
 ## 核心原则
+
+### HARD-GATE（变更入口/出口）
+
+```
+< HARD-GATE: 变更入口 >
+- 禁止直接改代码：每次变更前必须先执行变更分析（确定 L1/L2/L3 等级）
+- 禁止跳过版本保存：变更前必须先提交当前版本或创建 Git checkpoint
+- 禁止未分析就实施：不明确影响范围的变更不得执行
+</ HARD-GATE >
+
+< HARD-GATE: 变更出口 >
+- L1 变更：必须运行受影响模块的测试
+- L2 变更：必须同步更新代码+文档+测试，并运行全量回归
+- L3 变更：必须走完整循环（Phase 0→1→2），不得直接改代码
+- 禁止跳过回退方案：L2 以上变更必须有明确的回退步骤
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"小改动不用分析"** — AI 改代码时最大的风险是"优化"掉已有功能。即使是 L1 微小变更，也必须确认影响范围。
+
+**"先改再说，有问题再回退"** — 没有版本保存的变更是赌博。AI 可能把已经做好的功能改没有，回退成本极高。
+
+**"L3 变更当 L1 处理"** — 架构变更走 L1 路径是灾难。技术选型变更必须重新评估需求、架构、数据模型。
 
 **基本原则**：每次做变更前，对现有版本一定要做一次版本保存，因为AI Agent可能把你已经做好的功能改没有！
 

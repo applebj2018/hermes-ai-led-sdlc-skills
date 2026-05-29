@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-testing
+name: ai-led-sdlc-testing
 description: "Phase 5: 测试工程。支持TDD和Test-last，TDAD影响分析，四层测试体系，验证优先。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [testing, 测试工程, TDD, TDAD, 验证优先, 测试用例, 回归测试, 覆盖率]
-    related_skills: [ai-led-dev-overview, ai-led-dev-implementation, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-implementation, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 5: 测试工程
@@ -17,6 +17,33 @@ metadata:
 - 需要构建TDAD映射
 - 需要执行回归测试策略
 - 用户讨论测试、验证、覆盖率
+
+## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 5 入口 >
+- 前置检查：确认代码已完成且通过 pyright 类型检查
+- 前置检查：确认单元测试已随代码生成
+- 未完成的代码不得进入系统化测试阶段
+</ HARD-GATE >
+
+< HARD-GATE: Phase 5 出口 >
+- 禁止跳过审计：测试用例必须经 AI 审计覆盖度
+- 禁止跳过人类审批：测试报告必须经用户确认
+- 禁止覆盖率不足：核心模块测试覆盖率必须达标
+- 禁止跳过 TDAD 映射：核心函数必须有函数→测试映射
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"测试只是为了通过 CI"** — 测试是安全网，不是形式。AI 改代码时最大的风险是功能遗漏和逻辑替换，只有充分测试才能捕捉。
+
+**"边界测试太繁琐了"** — 边界条件是最容易出问题的地方。至少 5 条边界测试用例，覆盖最小值、最大值、临界点两侧。
+
+**"安全测试以后再说"** — SQL 注入、XSS、权限越权必须在测试阶段发现。生产环境暴露的安全漏洞修复成本是测试阶段的 100 倍。
 
 ## 核心理念
 
@@ -232,6 +259,42 @@ def verify_search_results(query, results):
 6. **生成报告**：输出测试报告和覆盖率分析
 7. **人类审批**：按审批清单逐项检查
 
+## 测试数据隔离模式（实战经验）
+
+当被测系统使用持久化存储（SQLite/ChromaDB/NetworkX）时，测试间数据泄漏是最大陷阱。
+
+### 隔离策略
+
+```
+会话级 (scope="session"):
+  └── test_data_dir = tempfile.mkdtemp()     # 根临时目录
+        ├── 函数级 fixture (scope="function"):
+        │     ├── tmp_db_path = test_data_dir / f"{uuid4()}.db"
+        │     ├── tmp_chroma_dir = test_data_dir / f"chroma_{uuid4()}"
+        │     └── tmp_graph_path = test_data_dir / f"graph_{uuid4()}.json"
+        └── session 结束后自动清理
+```
+
+### 关键要点
+
+1. **SQLite**: 每个测试使用独立 `.db` 文件（UUID 后缀），避免 UNIQUE 约束冲突
+2. **ChromaDB**: 每个测试使用独立持久化目录，通过 `Settings.CHROMA_DIR` 动态注入
+3. **NetworkX/JSON 图谱**: 将硬编码路径改为动态函数 `_get_graph_path()`，测试通过 `patched_settings` fixture 覆盖
+4. **全局变量/单例**: 被测服务不应持有全局连接或缓存 — 改为每次操作时读取配置
+5. **Pytest fixture 顺序**: `session` 级目录 → `function` 级子文件 → `autouse=True` 的清理
+
+### 常见陷阱
+
+| 陷阱 | 症状 | 修复 |
+|------|------|------|
+| SQLite 布尔列返回 `int` | `is True` 断言失败 | 改为 `== 1` 或 `is not False` |
+| ChromaDB 集合残留 | 列表查询返回非空 | 每个测试独立持久化目录 |
+| 图谱文件共享 | 节点数不为 0 | 动态路径 + fixture 覆盖 |
+| 全局连接未关闭 | 文件锁/端口占用 | 使用上下文管理器或 `teardown` |
+| Mock 维度不匹配 | `assert len(embedding) == 1024` 失败 | Mock 返回向量必须与生产环境维度一致（bge-m3=1024） |
+| JSON fixture 被二次序列化 | `json.dumps()` 对字符串再次编码 | 测试数据中的无效 JSON 行应直接写字符串，不通过 `json.dumps()` |
+| 列表推导变量泄漏 | `f"这是第{i}句"` 中 `i` 未定义 | 使用显式生成器：`[f"第{j}句" for j in range(n)]` |
+
 ## 注意事项
 
 - **测试是安全网**：不要跳过测试，AI改代码可能遗漏功能
@@ -239,3 +302,4 @@ def verify_search_results(query, results):
 - **安全测试不可跳过**：SQL注入、XSS、权限越权必须测试
 - **TDAD映射维护**：每次添加新功能时更新映射
 - **回归策略**：不要每次都跑全量测试，使用分层策略
+- **数据隔离优先**：持久化存储系统必须先设计隔离策略再写测试

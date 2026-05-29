@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-overview
+name: ai-led-sdlc-overview
 description: "AI主导的软件全生命周期开发方法论总览。覆盖从环境配置到交付运维的完整流水线。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [agentic-engineering, AI-led-development, SDLC, 软件全生命周期, 需求分析, 架构设计, 编码实施, 测试工程, 文档交付, 变更管理]
-    related_skills: [ai-led-dev-project-init, ai-led-dev-requirements, ai-led-dev-architecture, ai-led-dev-feature-design, ai-led-dev-implementation, ai-led-dev-testing, ai-led-dev-documentation, ai-led-dev-change-mgmt, ai-led-dev-version-control, ai-led-dev-quality-audit, ai-led-dev-user-preference, ai-led-dev-domain-spec]
+    related_skills: [ai-led-sdlc-project-init, ai-led-sdlc-requirements, ai-led-sdlc-architecture, ai-led-sdlc-feature-design, ai-led-sdlc-implementation, ai-led-sdlc-testing, ai-led-sdlc-documentation, ai-led-sdlc-change-mgmt, ai-led-sdlc-version-control, ai-led-sdlc-quality-audit, ai-led-sdlc-user-preference, ai-led-sdlc-domain-spec]
 ---
 
 # AI主导的软件全生命周期开发方法论 — 总览
@@ -127,6 +127,43 @@ Phase 9:   团队协作
 | **L2 局部** | 接口/数据模型变更 | 模块级 | AI同时修改代码+文档+测试 |
 | **L3 架构** | 核心架构/技术选型 | 系统级 | 完整循环（Phase 0→1→2） |
 
+## HARD-GATE（硬性约束，不可协商）
+
+以下约束适用于所有阶段，违反任何一条视为严重错误：
+
+### 阶段间 HARD-GATE
+
+```
+< HARD-GATE: 阶段流转 >
+1. 禁止跳过阶段 — 每个阶段必须按顺序完成，不得跳跃
+2. 禁止跨阶段输出 — Phase 1 不生成代码，Phase 2 不写实现，Phase 4 不跳测试
+3. 禁止未审先用 — 每个阶段输出必须经 AI 审计 + 人类审批后才能进入下一阶段
+4. 禁止假设前置 — 每个阶段开始时必须验证上游产出文件存在且已批准
+5. 禁止并行阶段 — 阶段串行执行，不得同时生成需求和架构
+</ HARD-GATE >
+```
+
+### 行为 HARD-GATE
+
+```
+< HARD-GATE: AI 行为 >
+1. 禁止跳过外部搜索 — 在需求和架构阶段，必须搜索至少 2 个业界来源
+2. 禁止跳过审计 — 每个阶段输出必须经 AI 审计后才能提交人类审批
+3. 禁止跳过测试 — 没有对应测试的代码不允许提交
+4. 禁止占位符 — 不生成 TODO、FIXME、"...待实现" 等占位内容
+5. 禁止截断 — 必须输出完整可运行的文件级代码
+6. 禁止 Docker — 所有环境必须原生运行于本地 Ubuntu 或 Conda
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"这太简单了，不需要完整流程"** — 即使是一个单函数工具、配置修改或脚本，也必须走完当前阶段的完整流程。简单项目的文档可以简短，但流程不可跳过。
+
+**"先写代码再说"** — 需求不明确时直接编码是最大浪费。Phase 1 的输出（INITIAL.md）是 Phase 4 的唯一依据，没有它编码就是盲猜。
+
+**"审计走个形式"** — 审计不是盖章，是真正查找遗漏、矛盾和风险。审计评分 < 30 必须重新审计。
+
 ## 硬性规则（不可协商）
 
 1. **审计是强制的** — 每个阶段的输出必须通过AI审计后才能进入人类审查
@@ -200,8 +237,7 @@ Phase 9:   团队协作
 }
 ```
 
-**实施参考**: 见 `ai-led-dev-version-control` 技能中的"人类审批清单"章节。
-在实际项目中可使用 `approval.py` 脚本管理审批状态（CLI 工具）。
+**实施参考**: 见 `references/approval-checkpoint.md` — 完整的 checkpoint.json 格式、CLI 工具 (`approval.py`) 和对话集成指南。
 
 ## 何时激活
 
@@ -216,13 +252,13 @@ Phase 9:   团队协作
 
 **设计原则与经验**：详见 `references/design-lessons.md` — 技能正交性、避免重复、激活机制。
 
-|| 技能 | 阶段 | 激活关键词 ||------|------|-----------|| `ai-led-dev-project-init` | Phase 0 | 项目初始化、Agent配置、SOUL.md、AGENTS.md || `ai-led-dev-requirements` | Phase 1 | 需求工程、PRD、INITIAL.md、需求分析 || `ai-led-dev-architecture` | Phase 2 | 架构设计、技术选型、系统设计 || `ai-led-dev-feature-design` | Phase 2.5 | 功能设计、UI设计、权限设计、原型 || `ai-led-dev-implementation` | Phase 3-4 | 编码实施、TDD、代码生成 || `ai-led-dev-testing` | Phase 5 | 测试工程、测试用例、TDAD、验证优先 || `ai-led-dev-documentation` | Phase 6 | 文档同步、交付文档、用户手册 || `ai-led-dev-change-mgmt` | Phase 7 | 变更管理、迭代、影响分析 || `ai-led-dev-version-control` | Phase 8 | 版本管理、发布、补丁 || `ai-led-dev-quality-audit` | 跨阶段 | 质量审计、审查、审计报告 || `ai-led-dev-user-preference` | 跨阶段 | 用户偏好、技术选型、默认配置、ChromaDB、SQLite3、Ollama || `ai-led-dev-domain-spec` | 跨阶段 | 行业规范、领域知识、业务规则、电力行业 |
+|| 技能 | 阶段 | 激活关键词 ||------|------|-----------|| `ai-led-sdlc-project-init` | Phase 0 | 项目初始化、Agent配置、SOUL.md、AGENTS.md || `ai-led-sdlc-requirements` | Phase 1 | 需求工程、PRD、INITIAL.md、需求分析 || `ai-led-sdlc-architecture` | Phase 2 | 架构设计、技术选型、系统设计 || `ai-led-sdlc-feature-design` | Phase 2.5 | 功能设计、UI设计、权限设计、原型 || `ai-led-sdlc-implementation` | Phase 3-4 | 编码实施、TDD、代码生成 || `ai-led-sdlc-testing` | Phase 5 | 测试工程、测试用例、TDAD、验证优先 || `ai-led-sdlc-documentation` | Phase 6 | 文档同步、交付文档、用户手册 || `ai-led-sdlc-change-mgmt` | Phase 7 | 变更管理、迭代、影响分析 || `ai-led-sdlc-version-control` | Phase 8 | 版本管理、发布、补丁 || `ai-led-sdlc-quality-audit` | 跨阶段 | 质量审计、审查、审计报告 || `ai-led-sdlc-user-preference` | 跨阶段 | 用户偏好、技术选型、默认配置、ChromaDB、SQLite3、Ollama || `ai-led-sdlc-domain-spec` | 跨阶段 | 行业规范、领域知识、业务规则、电力行业 |
 
 ## 配置注入机制
 
 本方法论使用**两个配置注入技能**，在各阶段自动注入个性化配置：
 
-### 1. 用户偏好注入 (`ai-led-dev-user-preference`)
+### 1. 用户偏好注入 (`ai-led-sdlc-user-preference`)
 
 **内容**：用户的个人/公司技术栈偏好、编码风格、工具链选择。
 
@@ -236,7 +272,7 @@ Phase 9:   团队协作
 - 关系型数据库默认使用 SQLite3
 - AI推理默认使用 Ollama + qwen3.6
 
-### 2. 行业规范注入 (`ai-led-dev-domain-spec`)
+### 2. 行业规范注入 (`ai-led-sdlc-domain-spec`)
 
 **内容**：行业特定的业务规则、数据规范、测试场景。
 
@@ -256,28 +292,28 @@ Phase 9:   团队协作
 
 ```
 Phase 0: 项目初始化
-  ├── 加载 ai-led-dev-user-preference → 生成默认配置
-  ├── 加载 ai-led-dev-domain-spec → 补充行业特定需求
+  ├── 加载 ai-led-sdlc-user-preference → 生成默认配置
+  ├── 加载 ai-led-sdlc-domain-spec → 补充行业特定需求
   └── 输出: SOUL.md, AGENTS.md, CLAUDE.md
 
 Phase 1: 需求分析
-  ├── 加载 ai-led-dev-user-preference → 技术栈默认值
-  ├── 加载 ai-led-dev-domain-spec → 行业特有需求
+  ├── 加载 ai-led-sdlc-user-preference → 技术栈默认值
+  ├── 加载 ai-led-sdlc-domain-spec → 行业特有需求
   └── 输出: INITIAL.md
 
 Phase 2: 架构设计
-  ├── 加载 ai-led-dev-user-preference → 技术选型默认值
-  ├── 加载 ai-led-dev-domain-spec → 行业特定约束
+  ├── 加载 ai-led-sdlc-user-preference → 技术选型默认值
+  ├── 加载 ai-led-sdlc-domain-spec → 行业特定约束
   └── 输出: ARCHITECTURE.md, DATA-MODEL.md
 
 Phase 3-4: 编码实施
-  ├── 加载 ai-led-dev-user-preference → 编码风格默认值
-  ├── 加载 ai-led-dev-domain-spec → 行业特定业务规则
+  ├── 加载 ai-led-sdlc-user-preference → 编码风格默认值
+  ├── 加载 ai-led-sdlc-domain-spec → 行业特定业务规则
   └── 输出: 源代码, 单元测试
 
 Phase 5: 测试工程
-  ├── 加载 ai-led-dev-user-preference → 测试框架默认值
-  ├── 加载 ai-led-dev-domain-spec → 行业特定测试场景
+  ├── 加载 ai-led-sdlc-user-preference → 测试框架默认值
+  ├── 加载 ai-led-sdlc-domain-spec → 行业特定测试场景
   └── 输出: 测试套件, 测试报告
 ```
 
@@ -285,12 +321,12 @@ Phase 5: 测试工程
 
 当用户需要将这套方法论打包为 GitHub 仓库时：
 
-1. **仓库结构**：`skills/ai-led-dev-*/SKILL.md` + `README.md` + `LICENSE`
+1. **仓库结构**：`skills/ai-led-sdlc-*/SKILL.md` + `README.md` + `LICENSE`
 2. **README 内容**：方法论概述、阶段流转图、技能清单、配置注入机制、硬性规则
 3. **分发命令**：
    ```bash
    # 复制技能到 Hermes
-   cp -r skills/ai-led-dev-* ~/.hermes/profiles/<profile>/skills/software-development/
+   cp -r skills/ai-led-sdlc-* ~/.hermes/profiles/<profile>/skills/software-development/
    ```
 4. **GitHub 推送**：`git remote add origin https://github.com/<user>/<repo>.git && git push -u origin main`
 

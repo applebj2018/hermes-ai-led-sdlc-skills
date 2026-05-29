@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-quality-audit
+name: ai-led-sdlc-quality-audit
 description: "跨阶段质量审计框架。定义统一的审计报告格式、审查维度、评分标准。硬性要求。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [quality-audit, 质量审计, 审查, audit-report, 审计报告, 评分标准]
-    related_skills: [ai-led-dev-overview, ai-led-dev-requirements, ai-led-dev-architecture, ai-led-dev-feature-design, ai-led-dev-implementation, ai-led-dev-testing, ai-led-dev-documentation]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-requirements, ai-led-sdlc-architecture, ai-led-sdlc-feature-design, ai-led-sdlc-implementation, ai-led-sdlc-testing, ai-led-sdlc-documentation]
 ---
 
 # 跨阶段质量审计框架
@@ -17,6 +17,26 @@ metadata:
 - 用户讨论审计、审查、质量检查
 
 ## 核心原则
+
+### HARD-GATE（审计强制约束）
+
+```
+< HARD-GATE: 审计执行 >
+1. 禁止跳过审计 — 任何阶段的产出必须经 AI 审计后才能进入人类审查
+2. 禁止自我审计 — 审计 Agent 必须独立于生成 Agent，不得复用生成 Agent 的评估
+3. 禁止形式审计 — 审计评分 < 30 必须标记为"不通过"，生成 Agent 必须修复后重新审计
+4. 禁止生成内容 — 审计 Agent 只做质量检查，不生成新内容
+5. 禁止跳过人类审批 — AI 审计通过后必须等待用户明确批准
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"审计走个形式"** — 审计不是盖章，是真正查找遗漏、矛盾和风险。每一项审计维度必须逐项检查，不是凭感觉打分。
+
+**"审计 Agent 太温和了"** — 审计 Agent 的角色是"找茬"，不是"表扬"。发现问题是审计的成功，没发现问题才是审计的失败。
+
+**"有条件通过当通过用"** — 有条件通过（30-39 分）意味着警告项必须处理后才能进入下一阶段，不是直接放行。
 
 **审计是硬性要求，不可跳过。** 每个阶段的输出必须通过AI审计后才能进入人类审查。
 

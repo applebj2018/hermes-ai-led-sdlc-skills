@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-feature-design
+name: ai-led-sdlc-feature-design
 description: "Phase 2.5: 功能设计。设计权限模型、工作流、UI组件、设计令牌、可交互原型。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [feature-design, 功能设计, UI-design, 权限设计, 工作流, 原型, DESIGN-TOKENS]
-    related_skills: [ai-led-dev-overview, ai-led-dev-architecture, ai-led-dev-implementation, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-architecture, ai-led-sdlc-implementation, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 2.5: 功能设计
@@ -16,6 +16,29 @@ metadata:
 - 需要设计权限模型、审批流程、版本管理
 - 需要设计UI组件和设计令牌
 - 需要生成可交互HTML原型
+
+## 核心原则
+
+### HARD-GATE（阶段入口/出口）
+
+```
+< HARD-GATE: Phase 2.5 入口 >
+- 前置检查：确认 ARCHITECTURE.md 和 INITIAL.md 已存在且状态为 approved
+- 未批准的架构文档不得进入 Phase 2.5
+</ HARD-GATE >
+
+< HARD-GATE: Phase 2.5 出口 >
+- 禁止跳过审计：所有功能设计文档必须经 AI 审计
+- 禁止跳过人类审批：审计通过后必须等待用户明确批准
+- 禁止直接进入 Phase 4：功能设计未批准前，不得生成代码
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"权限随便设，后面再改"** — 权限模型是安全的基础，后期修改涉及数据库结构、API 层、前端层，成本极高。
+
+**"原型不重要，直接写代码"** — 没有原型的功能设计是纸上谈兵。用户无法验证交互逻辑，开发完成后返工率高。
 
 ## 核心输出
 

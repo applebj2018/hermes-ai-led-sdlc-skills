@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-user-preference
+name: ai-led-sdlc-user-preference
 description: "用户偏好与默认配置。存储个人/公司的技术栈偏好、编码风格、工具链选择。在各阶段作为默认值注入。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [user-preference, 用户偏好, default-config, 默认配置, tech-preference, 技术偏好]
-    related_skills: [ai-led-dev-overview, ai-led-dev-project-init, ai-led-dev-architecture]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-project-init, ai-led-sdlc-architecture]
 ---
 
 # 用户偏好与默认配置
@@ -203,6 +203,8 @@ tech_stack:
 - 容器化: 禁止Docker，使用原生运行
 ```
 
+**详细说明**：见 `references/configuration-injection-pattern.md`
+
 ## 注意事项
 
 - **默认值可覆盖**：所有默认值都可以在项目级别覆盖
@@ -210,4 +212,4 @@ tech_stack:
 - **本地优先**：优先使用本地部署方案（Ollama、SQLite、ChromaDB）
 - **Conda 环境**：使用 Conda 管理 Python 环境
 - **配置透明**：所有配置在 AGENTS.md 中明确声明
-- **与行业规范分离**：本技能只包含技术偏好，行业规范见 `ai-led-dev-domain-spec`
+- **与行业规范分离**：本技能只包含技术偏好，行业规范见 `ai-led-sdlc-domain-spec`

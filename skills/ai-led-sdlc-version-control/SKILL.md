@@ -1,11 +1,11 @@
 ---
-name: ai-led-dev-version-control
+name: ai-led-sdlc-version-control
 description: "Phase 8: 版本管理与发布。分支策略、补丁修订、发布流程、回滚机制。"
 version: 1.0.0
 metadata:
   hermes:
     tags: [version-control, 版本管理, release, 发布, patch, 补丁, rollback, 回滚]
-    related_skills: [ai-led-dev-overview, ai-led-dev-change-mgmt, ai-led-dev-quality-audit]
+    related_skills: [ai-led-sdlc-overview, ai-led-sdlc-change-mgmt, ai-led-sdlc-quality-audit]
 ---
 
 # Phase 8: 版本管理与发布
@@ -16,6 +16,32 @@ metadata:
 - 需要发布补丁或新版本
 - 需要执行回滚操作
 - 用户讨论版本、发布、补丁、回滚
+
+## 核心原则
+
+### HARD-GATE（版本入口/出口）
+
+```
+< HARD-GATE: 发布入口 >
+- 禁止跳过测试：发布前必须确认所有测试通过
+- 禁止跳过审计：补丁必须经 AI 审计修复有效性和副作用
+- 禁止跳过人类审批：发布必须经用户确认
+</ HARD-GATE >
+
+< HARD-GATE: 回滚入口 >
+- 禁止盲目回滚：必须先确认问题严重性再决定回滚
+- 禁止跳过验证：回滚后必须重新部署并验证
+- 禁止跳过根因分析：回滚后必须分析根本原因并制定修复计划
+</ HARD-GATE >
+```
+
+### Anti-Pattern（常见错误模式）
+
+**"补丁直接上生产"** — 未经审计和测试的补丁是定时炸弹。修复一个问题可能引入更多问题。
+
+**"分支活太久"** — 超过 3 天的分支合并冲突指数级增长。短生命周期分支是铁律。
+
+**"回滚不分析根因"** — 回滚只是止血，不分析根因的问题会反复出现。
 
 ## 分支策略
 

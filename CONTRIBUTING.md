@@ -2,11 +2,11 @@
 
 ## 新增技能流程
 
-1. 在 `skills/` 下创建目录，命名格式：`ai-led-dev-<主题>`
+1. 在 `skills/` 下创建目录，命名格式：`ai-led-sdlc-<主题>`
 2. 编写 `SKILL.md`，顶部必须包含 YAML frontmatter：
    ```yaml
    ---
-   name: ai-led-dev-xxx
+   name: ai-led-sdlc-xxx
    description: "简短描述（60字以内）。"
    version: "1.0.0"
    ---
@@ -17,6 +17,6 @@
 
 ## 命名规范
 
-- 目录名：kebab-case，前缀统一为 `ai-led-dev-`
+- 目录名：kebab-case，前缀统一为 `ai-led-sdlc-`
 - description：一句话，句号结尾，不超过 60 个字符
 - 分类（category）：analysis / design / development / quality / docs / process / config
