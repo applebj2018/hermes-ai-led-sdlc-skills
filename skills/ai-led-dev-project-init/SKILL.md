@@ -310,11 +310,36 @@ CLAUDE.md 是项目级AI约束，优先级高于全局配置。
 2. **搜索最佳实践**：搜索同类项目的初始化配置
 3. **生成配置**：生成 SOUL.md、AGENTS.md、CLAUDE.md
 4. **创建目录**：按标准结构创建项目目录
-5. **初始化版本控制**：创建 .gitignore 和初始 Git 提交
-6. **提交审计**：将配置提交给审计Agent审查
-7. **迭代修改**：根据审计报告修改配置
-8. **人类审批**：按审批清单逐项检查
-9. **提交版本控制**：将最终配置提交到仓库
+5. **初始化审批检查点**：创建 `checkpoint.json`，定义所有阶段的初始状态为 `pending`
+6. **初始化版本控制**：创建 .gitignore 和初始 Git 提交
+7. **提交审计**：将配置提交给审计Agent审查
+8. **迭代修改**：根据审计报告修改配置
+9. **人类审批**：按审批清单逐项检查，更新 checkpoint.json 中 Phase 0 状态为 `approved`
+10. **提交版本控制**：将最终配置提交到仓库
+
+### 审批检查点初始化
+
+Phase 0 必须创建 `checkpoint.json`，这是方法论的核心机制——每个阶段完成后必须经人类审批才能进入下一阶段。
+
+```json
+{
+  "project_name": "[项目名称]",
+  "created_at": "[ISO 8601 timestamp]",
+  "checkpoints": [
+    {"phase": "Phase 0", "description": "项目初始化", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 1", "description": "需求分析", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 2", "description": "架构设计", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 3-4", "description": "编码实施", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 5", "description": "测试工程", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 6", "description": "文档同步", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""},
+    {"phase": "Phase 7", "description": "质量审计", "status": "pending", "artifacts": [], "audit_report": "", "approved_by": "", "approved_at": "", "comments": "", "rejection_reason": ""}
+  ]
+}
+```
+
+**审批状态**: `pending` → `approved` / `rejected` / `skipped`
+**硬性规则**: 未获得当前阶段审批前，禁止进入下一阶段。
+**参考**: 详见 `ai-led-dev-overview` 技能的 `references/approval-checkpoint.md`。
 
 ## 注意事项
 
